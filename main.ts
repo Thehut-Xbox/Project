@@ -1,11 +1,32 @@
 namespace SpriteKind {
     export const tail = SpriteKind.create()
 }
-controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
-    direction = "up"
-})
 function Start () {
+    mySprite = sprites.create(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . 7 7 7 7 7 7 7 7 . . . . 
+        . . . 7 7 7 7 7 7 7 7 7 7 . . . 
+        . . . 7 7 7 7 7 7 7 7 7 7 . . . 
+        . . 7 7 f f 7 7 7 7 f f 7 7 . . 
+        . 7 7 7 f f 7 7 7 7 f f 7 7 7 . 
+        . 7 7 7 7 7 7 7 7 7 7 7 7 7 7 . 
+        . 7 7 7 7 7 7 7 7 7 7 7 7 7 7 . 
+        . 7 7 7 7 7 7 7 7 7 7 7 7 7 7 . 
+        . 7 7 7 7 7 7 7 7 7 7 7 7 7 7 . 
+        . 7 7 7 7 7 7 7 7 7 7 7 7 7 7 . 
+        . 7 7 7 7 7 7 7 7 7 7 7 7 7 7 . 
+        . . 7 7 7 7 7 7 7 7 7 7 7 7 . . 
+        `, SpriteKind.Player)
+    mySprite.setPosition(0, 0)
+    grid.snap(mySprite, false)
+    grid.moveWithButtons(mySprite)
+    Tailparts = []
     for (let index = 0; index <= 3; index++) {
+        let Tailpart = 0
+        let Indexofsnake = 0
         Snakeoptions = sprites.create(img`
             . . 7 7 7 7 7 7 7 7 7 7 f f . . 
             . . 7 7 7 7 7 7 7 f f f f 7 . . 
@@ -24,20 +45,22 @@ function Start () {
             . . 7 7 e e 7 f f f f e e 7 . . 
             . . f f f f f f 7 7 7 7 7 e . . 
             `, SpriteKind.tail)
+        Snakeoptions.x = mySprite.x + (Indexofsnake + 1) * 8
+        Tailparts.push(Tailpart)
     }
     direction = "left"
 }
-function orbspawn () {
-	
-}
-controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
-    direction = "left"
+controller.down.onEvent(ControllerButtonEvent.Released, function () {
+    direction = "down"
 })
-controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
+controller.right.onEvent(ControllerButtonEvent.Released, function () {
     direction = "right"
 })
-controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
-    direction = "down"
+controller.left.onEvent(ControllerButtonEvent.Released, function () {
+    direction = "left"
+})
+controller.up.onEvent(ControllerButtonEvent.Released, function () {
+    direction = "up"
 })
 function obstacles (column: number, row: number) {
     for (let index2 = 0; index2 <= column; index2++) {
@@ -50,34 +73,18 @@ function obstacles (column: number, row: number) {
         }
     }
 }
-let Snakeoptions: Sprite = null
 let direction = ""
+let Snakeoptions: Sprite = null
+let Tailparts: number[] = []
+let mySprite: Sprite = null
 let movebuttons = true
-tiles.setCurrentTilemap(tilemap`level1`)
-let mySprite = sprites.create(img`
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . 7 7 7 7 7 7 7 7 . . . . 
-    . . . 7 7 7 7 7 7 7 7 7 7 . . . 
-    . . . 7 7 7 7 7 7 7 7 7 7 . . . 
-    . . 7 7 f f 7 7 7 7 f f 7 7 . . 
-    . 7 7 7 f f 7 7 7 7 f f 7 7 7 . 
-    . 7 7 7 7 7 7 7 7 7 7 7 7 7 7 . 
-    . 7 7 7 7 7 7 7 7 7 7 7 7 7 7 . 
-    . 7 7 7 7 7 7 7 7 7 7 7 7 7 7 . 
-    . 7 7 7 7 7 7 7 7 7 7 7 7 7 7 . 
-    . 7 7 7 7 7 7 7 7 7 7 7 7 7 7 . 
-    . 7 7 7 7 7 7 7 7 7 7 7 7 7 7 . 
-    . . 7 7 7 7 7 7 7 7 7 7 7 7 . . 
-    `, SpriteKind.Player)
-grid.snap(mySprite, false)
-grid.moveWithButtons(mySprite)
 namespace userconfig {
     export const ARCADE_SCREEN_WIDTH = 260
     export const ARCADE_SCREEN_HEIGHT = 260
 }
+tiles.setCurrentTilemap(tilemap`level1`)
+Start()
+obstacles(16, 16)
 game.onUpdateInterval(2000, function () {
     if (movebuttons) {
         movebuttons = false
