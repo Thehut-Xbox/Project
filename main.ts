@@ -10,22 +10,22 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
 })
 function movement () {
     Snakeoptions = sprites.create(img`
-        . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
-        . . 2 2 f f f f f f f f 2 2 . . 
-        . . f f f 2 2 2 2 2 2 f f f . . 
-        . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
-        . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
-        . . f f f 2 2 2 2 2 2 f f f . . 
-        . . 2 2 f f f f f f f f 2 2 . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
         . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
         . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
-        . . f f f 2 2 2 2 2 2 f f f . . 
-        . . 2 2 f f f f f f f f 2 2 . . 
         . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
         . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
-        . . 2 2 f f f f f f f f 2 2 . . 
-        . . f f f 2 2 2 2 2 2 f f f . . 
         . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
+        . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
+        . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
+        . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
+        . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
+        . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
+        . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
+        . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
         `, SpriteKind.tail)
     if (direction == "left") {
         mySprite.setImage(img`
@@ -144,21 +144,21 @@ function Start () {
     Tailparts = []
     for (let Indexofsnake = 0; Indexofsnake <= 2; Indexofsnake++) {
         Snakeoptions = sprites.create(img`
-            . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
-            . . 2 2 f f f f f f f f 2 2 . . 
-            . . f f f 2 2 2 2 2 2 f f f . . 
-            . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
-            . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
-            . . f f f 2 2 2 2 2 2 f f f . . 
-            . . 2 2 f f f f f f f f 2 2 . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
             . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
             . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
-            . . f f f 2 2 2 2 2 2 f f f . . 
-            . . 2 2 f f f f f f f f 2 2 . . 
             . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
             . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
-            . . 2 2 f f f f f f f f 2 2 . . 
-            . . f f f 2 2 2 2 2 2 f f f . . 
+            . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
+            . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
+            . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
+            . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
+            . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
+            . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
+            . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
             . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
             `, SpriteKind.tail)
         Snakeoptions.x = mySprite.x + (Indexofsnake + 1) * 8
@@ -190,7 +190,7 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
 function obstacles (column: number, row: number) {
     for (let index2 = 0; index2 <= column; index2++) {
         for (let index3 = 0; index3 <= row; index3++) {
-            if (Math.percentChance(1)) {
+            if (Math.percentChance(1e-50)) {
                 if (tiles.tileAtLocationEquals(tiles.getTileLocation(index2, index3), assets.tile`myTile3`) || tiles.tileAtLocationEquals(tiles.getTileLocation(index2, index3), assets.tile`myTile0`)) {
                     tiles.setTileAt(tiles.getTileLocation(index2, index3), assets.tile`myTile`)
                 }
@@ -202,14 +202,40 @@ let Tailparts: Sprite[] = []
 let mySprite: Sprite = null
 let Snakeoptions: Sprite = null
 let direction = ""
-let movebuttons = true
+let map = false
 namespace userconfig {
-    export const ARCADE_SCREEN_WIDTH = 260
-    export const ARCADE_SCREEN_HEIGHT = 260
+    export const ARCADE_SCREEN_WIDTH = 320
+    export const ARCADE_SCREEN_HEIGHT = 320
 }
-tiles.setCurrentTilemap(tilemap`level1`)
-Start()
-obstacles(16, 16)
+let map_size = game.askForNumber("1=small 2=medium 3=large", 1)
+let movebuttons = true
+while (map == false) {
+    if (map_size == 1) {
+        Zoom.SetZoomFilter(2.5, Mode.Center)
+        tiles.setCurrentTilemap(tilemap`small`)
+        Start()
+        obstacles(13, 13)
+        map = true
+    } else {
+        if (map_size == 2) {
+            tiles.setCurrentTilemap(tilemap`medium`)
+            Start()
+            obstacles(18, 18)
+            map = true
+        } else {
+            if (map_size == 3) {
+                tiles.setCurrentTilemap(tilemap`large`)
+                Start()
+                obstacles(20, 20)
+                map = true
+            } else {
+                if (map_size == 4 || (map_size == 5 || (map_size == 6 || (map_size == 7 || (map_size == 8 || map_size == 9))))) {
+                    map_size = game.askForNumber("those aren't options", 1)
+                }
+            }
+        }
+    }
+}
 game.onUpdateInterval(2000, function () {
     if (movebuttons) {
         movebuttons = false
