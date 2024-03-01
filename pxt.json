@@ -4,7 +4,8 @@
     "description": "",
     "dependencies": {
         "device": "*",
-        "Sprite Grid": "github:microsoft/arcade-grid#v1.3.0"
+        "Sprite Grid": "github:microsoft/arcade-grid#v1.3.0",
+        "pxt-zoom": "github:kiwiphoenix364/pxt-zoom#v2.0.1"
     },
     "files": [
         "README.md",
