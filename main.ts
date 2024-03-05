@@ -120,6 +120,7 @@ function movement () {
     sprites.destroy(Tailparts.pop())
 }
 function Start () {
+    applenumber = 0
     mySprite = sprites.create(img`
         . . . . . . . . . . . . . . . . 
         . 2 2 2 2 2 2 2 . . . . . . . . 
@@ -138,7 +139,7 @@ function Start () {
         . 2 2 2 2 2 2 2 . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         `, SpriteKind.Player)
-    mySprite.setPosition(0, 0)
+    mySprite.setPosition(15, 15)
     grid.snap(mySprite, false)
     grid.moveWithButtons(mySprite)
     Tailparts = []
@@ -180,6 +181,23 @@ controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
         }
     }
 })
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile`, function (sprite, location) {
+    tiles.setTileAt(location, assets.tile`myTile0`)
+    Tailparts.push(Snakeoptions)
+    applenumber = applenumber - 1
+})
+function obstacles (column: number, row: number) {
+    for (let index2 = 0; index2 <= column; index2++) {
+        for (let index3 = 0; index3 <= row; index3++) {
+            if (Math.percentChance(1)) {
+                if (tiles.tileAtLocationEquals(tiles.getTileLocation(index2, index3), assets.tile`myTile3`) || tiles.tileAtLocationEquals(tiles.getTileLocation(index2, index3), assets.tile`myTile0`)) {
+                    tiles.setTileAt(tiles.getTileLocation(index2, index3), assets.tile`myTile`)
+                }
+            }
+        }
+    }
+    orbcheker(19, 19)
+}
 controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
     if (!(direction == "up")) {
         if (!(controller.left.isPressed() || controller.right.isPressed())) {
@@ -187,17 +205,16 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
         }
     }
 })
-function obstacles (column: number, row: number) {
-    for (let index2 = 0; index2 <= column; index2++) {
-        for (let index3 = 0; index3 <= row; index3++) {
-            if (Math.percentChance(1e-50)) {
-                if (tiles.tileAtLocationEquals(tiles.getTileLocation(index2, index3), assets.tile`myTile3`) || tiles.tileAtLocationEquals(tiles.getTileLocation(index2, index3), assets.tile`myTile0`)) {
-                    tiles.setTileAt(tiles.getTileLocation(index2, index3), assets.tile`myTile`)
-                }
+function orbcheker (row20: number, colum20: number) {
+    for (let index2 = 0; index2 <= colum20; index2++) {
+        for (let index3 = 0; index3 <= row20; index3++) {
+            if (tiles.tileAtLocationEquals(tiles.getTileLocation(index2, index3), assets.tile`myTile`)) {
+                applenumber = applenumber + 1
             }
         }
     }
 }
+let applenumber = 0
 let Tailparts: Sprite[] = []
 let mySprite: Sprite = null
 let Snakeoptions: Sprite = null
@@ -214,19 +231,20 @@ while (map == false) {
         Zoom.SetZoomFilter(2, Mode.Center)
         tiles.setCurrentTilemap(tilemap`small`)
         Start()
-        obstacles(13, 13)
+        obstacles(11, 11)
         map = true
     } else {
         if (map_size == 2) {
+            Zoom.SetZoomFilter(1.3, Mode.Center)
             tiles.setCurrentTilemap(tilemap`medium`)
             Start()
-            obstacles(18, 18)
+            obstacles(13, 13)
             map = true
         } else {
             if (map_size == 3) {
                 tiles.setCurrentTilemap(tilemap`large`)
                 Start()
-                obstacles(20, 20)
+                obstacles(19, 19)
                 map = true
             } else {
                 if (map_size == 4 || (map_size == 5 || (map_size == 6 || (map_size == 7 || (map_size == 8 || map_size == 9))))) {
@@ -236,6 +254,24 @@ while (map == false) {
         }
     }
 }
+forever(function () {
+    if (applenumber == 0) {
+        if (map_size == 1) {
+            obstacles(11, 11)
+        } else {
+            if (map_size == 2) {
+                obstacles(13, 13)
+            } else {
+                if (map_size == 3) {
+                    obstacles(19, 19)
+                }
+            }
+        }
+    }
+})
+game.onUpdateInterval(200, function () {
+    movement()
+})
 game.onUpdateInterval(2000, function () {
     if (movebuttons) {
         movebuttons = false
@@ -244,10 +280,4 @@ game.onUpdateInterval(2000, function () {
         movebuttons = true
         grid.snap(mySprite, false)
     }
-})
-forever(function () {
-	
-})
-game.onUpdateInterval(200, function () {
-    movement()
 })
