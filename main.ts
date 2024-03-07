@@ -8,6 +8,11 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
         }
     }
 })
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile`, function (sprite, location) {
+    tiles.setTileAt(location, assets.tile`myTile0`)
+    Tailparts.push(Snakeoptions)
+    applenumber = applenumber - 1
+})
 function movement () {
     Snakeoptions = sprites.create(img`
         . . . . . . . . . . . . . . . . 
@@ -139,7 +144,7 @@ function Start () {
         . 2 2 2 2 2 2 2 . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         `, SpriteKind.Player)
-    mySprite.setPosition(15, 15)
+    tiles.placeOnRandomTile(mySprite, assets.tile`myTile0`)
     grid.snap(mySprite, false)
     grid.moveWithButtons(mySprite)
     Tailparts = []
@@ -181,10 +186,12 @@ controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
         }
     }
 })
-scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile`, function (sprite, location) {
-    tiles.setTileAt(location, assets.tile`myTile0`)
-    Tailparts.push(Snakeoptions)
-    applenumber = applenumber - 1
+controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (!(direction == "up")) {
+        if (!(controller.left.isPressed() || controller.right.isPressed())) {
+            direction = "down"
+        }
+    }
 })
 function obstacles (column: number, row: number) {
     for (let index2 = 0; index2 <= column; index2++) {
@@ -198,13 +205,6 @@ function obstacles (column: number, row: number) {
     }
     orbcheker(19, 19)
 }
-controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (!(direction == "up")) {
-        if (!(controller.left.isPressed() || controller.right.isPressed())) {
-            direction = "down"
-        }
-    }
-})
 function orbcheker (row20: number, colum20: number) {
     for (let index2 = 0; index2 <= colum20; index2++) {
         for (let index3 = 0; index3 <= row20; index3++) {
@@ -214,10 +214,10 @@ function orbcheker (row20: number, colum20: number) {
         }
     }
 }
-let applenumber = 0
-let Tailparts: Sprite[] = []
 let mySprite: Sprite = null
+let applenumber = 0
 let Snakeoptions: Sprite = null
+let Tailparts: Sprite[] = []
 let direction = ""
 let map = false
 namespace userconfig {
@@ -254,6 +254,15 @@ while (map == false) {
         }
     }
 }
+game.onUpdateInterval(2000, function () {
+    if (movebuttons) {
+        movebuttons = false
+        grid.snap(mySprite, true)
+    } else {
+        movebuttons = true
+        grid.snap(mySprite, false)
+    }
+})
 forever(function () {
     if (applenumber == 0) {
         if (map_size == 1) {
@@ -271,13 +280,4 @@ forever(function () {
 })
 game.onUpdateInterval(200, function () {
     movement()
-})
-game.onUpdateInterval(2000, function () {
-    if (movebuttons) {
-        movebuttons = false
-        grid.snap(mySprite, true)
-    } else {
-        movebuttons = true
-        grid.snap(mySprite, false)
-    }
 })
