@@ -1,6 +1,10 @@
 namespace SpriteKind {
     export const tail = SpriteKind.create()
 }
+scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.floorLight0, function (sprite, location) {
+    game.gameOver(false)
+    game.splash("you lose")
+})
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     if (!(direction == "down")) {
         if (!(controller.left.isPressed() || controller.right.isPressed())) {
@@ -15,110 +19,90 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile`, function (sprite, lo
 })
 function movement () {
     Snakeoptions = sprites.create(img`
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
-        . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
-        . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
-        . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
-        . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
-        . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
-        . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
-        . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
-        . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
-        . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
-        . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
-        . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
+        2 2 2 2 2 2 2 2 2 2 2 2 
+        2 2 2 2 2 2 2 2 2 2 2 2 
+        2 2 2 2 2 2 2 2 2 2 2 2 
+        2 2 2 2 2 2 2 2 2 2 2 2 
+        2 2 2 2 2 2 2 2 2 2 2 2 
+        2 2 2 2 2 2 2 2 2 2 2 2 
+        2 2 2 2 2 2 2 2 2 2 2 2 
+        2 2 2 2 2 2 2 2 2 2 2 2 
+        2 2 2 2 2 2 2 2 2 2 2 2 
+        2 2 2 2 2 2 2 2 2 2 2 2 
+        2 2 2 2 2 2 2 2 2 2 2 2 
+        2 2 2 2 2 2 2 2 2 2 2 2 
         `, SpriteKind.tail)
     if (direction == "left") {
         mySprite.setImage(img`
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . 2 2 2 2 2 2 2 . 
-            . . . . . . . 2 2 2 2 2 2 2 2 2 
-            . . . . . 2 2 2 2 2 2 2 2 2 2 2 
-            . . . . 2 2 2 f f 2 2 2 2 2 2 2 
-            . . . . 2 2 2 f f 2 2 2 2 2 2 2 
-            . . . . 2 2 2 2 2 2 2 2 2 2 2 2 
-            . . . . 2 2 2 2 2 2 2 2 2 2 2 2 
-            . . . . 2 2 2 2 2 2 2 2 2 2 2 2 
-            . . . . 2 2 2 2 2 2 2 2 2 2 2 2 
-            . . . . 2 2 2 f f 2 2 2 2 2 2 2 
-            . . . . 2 2 2 f f 2 2 2 2 2 2 2 
-            . . . . . 2 2 2 2 2 2 2 2 2 2 2 
-            . . . . . . . 2 2 2 2 2 2 2 2 2 
-            . . . . . . . . 2 2 2 2 2 2 2 . 
-            . . . . . . . . . . . . . . . . 
+            . 2 2 2 2 2 2 2 2 2 2 . 
+            2 2 2 2 2 2 2 2 2 2 2 2 
+            2 2 f f 2 2 2 2 2 2 2 2 
+            2 2 f f 2 2 2 2 2 2 2 2 
+            2 2 2 2 2 2 2 2 2 2 2 2 
+            2 2 2 2 2 2 2 2 2 2 2 2 
+            2 2 2 2 2 2 2 2 2 2 2 2 
+            2 2 2 2 2 2 2 2 2 2 2 2 
+            2 2 f f 2 2 2 2 2 2 2 2 
+            2 2 f f 2 2 2 2 2 2 2 2 
+            2 2 2 2 2 2 2 2 2 2 2 2 
+            . 2 2 2 2 2 2 2 2 2 2 . 
             `)
-        mySprite.x += -8
-        Snakeoptions.x = mySprite.x + 8
+        mySprite.x += -12
+        Snakeoptions.x = mySprite.x + 12
         Snakeoptions.y = mySprite.y
     } else if (direction == "down") {
         mySprite.setImage(img`
-            . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
-            . 2 2 2 2 2 2 2 2 2 2 2 2 2 2 . 
-            . 2 2 2 2 2 2 2 2 2 2 2 2 2 2 . 
-            . 2 2 2 2 2 2 2 2 2 2 2 2 2 2 . 
-            . 2 2 2 2 2 2 2 2 2 2 2 2 2 2 . 
-            . 2 2 2 2 2 2 2 2 2 2 2 2 2 2 . 
-            . 2 2 2 2 2 2 2 2 2 2 2 2 2 2 . 
-            . 2 2 2 f f 2 2 2 2 f f 2 2 2 . 
-            . . 2 2 f f 2 2 2 2 f f 2 2 . . 
-            . . . 2 2 2 2 2 2 2 2 2 2 . . . 
-            . . . 2 2 2 2 2 2 2 2 2 2 . . . 
-            . . . . 2 2 2 2 2 2 2 2 . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
+            . 2 2 2 2 2 2 2 2 2 2 . 
+            2 2 2 2 2 2 2 2 2 2 2 2 
+            2 2 2 2 2 2 2 2 2 2 2 2 
+            2 2 2 2 2 2 2 2 2 2 2 2 
+            2 2 2 2 2 2 2 2 2 2 2 2 
+            2 2 2 2 2 2 2 2 2 2 2 2 
+            2 2 2 2 2 2 2 2 2 2 2 2 
+            2 2 2 2 2 2 2 2 2 2 2 2 
+            2 2 f f 2 2 2 2 f f 2 2 
+            2 2 f f 2 2 2 2 f f 2 2 
+            2 2 2 2 2 2 2 2 2 2 2 2 
+            . 2 2 2 2 2 2 2 2 2 2 . 
             `)
-        mySprite.y += 8
-        Snakeoptions.y = mySprite.y - 8
+        mySprite.y += 12
+        Snakeoptions.y = mySprite.y - 12
         Snakeoptions.x = mySprite.x
     } else if (direction == "right") {
         mySprite.setImage(img`
-            . . . . . . . . . . . . . . . . 
-            . 2 2 2 2 2 2 2 . . . . . . . . 
-            2 2 2 2 2 2 2 2 2 . . . . . . . 
-            2 2 2 2 2 2 2 2 2 2 2 . . . . . 
-            2 2 2 2 2 2 2 f f 2 2 2 . . . . 
-            2 2 2 2 2 2 2 f f 2 2 2 . . . . 
-            2 2 2 2 2 2 2 2 2 2 2 2 . . . . 
-            2 2 2 2 2 2 2 2 2 2 2 2 . . . . 
-            2 2 2 2 2 2 2 2 2 2 2 2 . . . . 
-            2 2 2 2 2 2 2 2 2 2 2 2 . . . . 
-            2 2 2 2 2 2 2 f f 2 2 2 . . . . 
-            2 2 2 2 2 2 2 f f 2 2 2 . . . . 
-            2 2 2 2 2 2 2 2 2 2 2 . . . . . 
-            2 2 2 2 2 2 2 2 2 . . . . . . . 
-            . 2 2 2 2 2 2 2 . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
+            . 2 2 2 2 2 2 2 2 2 2 . 
+            2 2 2 2 2 2 2 2 2 2 2 2 
+            2 2 2 2 2 2 2 2 f f 2 2 
+            2 2 2 2 2 2 2 2 f f 2 2 
+            2 2 2 2 2 2 2 2 2 2 2 2 
+            2 2 2 2 2 2 2 2 2 2 2 2 
+            2 2 2 2 2 2 2 2 2 2 2 2 
+            2 2 2 2 2 2 2 2 2 2 2 2 
+            2 2 2 2 2 2 2 2 f f 2 2 
+            2 2 2 2 2 2 2 2 f f 2 2 
+            2 2 2 2 2 2 2 2 2 2 2 2 
+            . 2 2 2 2 2 2 2 2 2 2 . 
             `)
-        mySprite.x += 8
-        Snakeoptions.x = mySprite.x - 8
+        mySprite.x += 12
+        Snakeoptions.x = mySprite.x - 12
         Snakeoptions.y = mySprite.y
     } else if (direction == "up") {
         mySprite.setImage(img`
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . 2 2 2 2 2 2 2 2 . . . . 
-            . . . 2 2 2 2 2 2 2 2 2 2 . . . 
-            . . . 2 2 2 2 2 2 2 2 2 2 . . . 
-            . . 2 2 f f 2 2 2 2 f f 2 2 . . 
-            . 2 2 2 f f 2 2 2 2 f f 2 2 2 . 
-            . 2 2 2 2 2 2 2 2 2 2 2 2 2 2 . 
-            . 2 2 2 2 2 2 2 2 2 2 2 2 2 2 . 
-            . 2 2 2 2 2 2 2 2 2 2 2 2 2 2 . 
-            . 2 2 2 2 2 2 2 2 2 2 2 2 2 2 . 
-            . 2 2 2 2 2 2 2 2 2 2 2 2 2 2 . 
-            . 2 2 2 2 2 2 2 2 2 2 2 2 2 2 . 
-            . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
+            . 2 2 2 2 2 2 2 2 2 2 . 
+            2 2 2 2 2 2 2 2 2 2 2 2 
+            2 2 f f 2 2 2 2 f f 2 2 
+            2 2 f f 2 2 2 2 f f 2 2 
+            2 2 2 2 2 2 2 2 2 2 2 2 
+            2 2 2 2 2 2 2 2 2 2 2 2 
+            2 2 2 2 2 2 2 2 2 2 2 2 
+            2 2 2 2 2 2 2 2 2 2 2 2 
+            2 2 2 2 2 2 2 2 2 2 2 2 
+            2 2 2 2 2 2 2 2 2 2 2 2 
+            2 2 2 2 2 2 2 2 2 2 2 2 
+            . 2 2 2 2 2 2 2 2 2 2 . 
             `)
-        mySprite.y += -8
-        Snakeoptions.y = mySprite.y + 8
+        mySprite.y += -12
+        Snakeoptions.y = mySprite.y + 12
         Snakeoptions.x = mySprite.x
     }
     Tailparts.unshift(Snakeoptions)
@@ -127,22 +111,18 @@ function movement () {
 function Start () {
     applenumber = 0
     mySprite = sprites.create(img`
-        . . . . . . . . . . . . . . . . 
-        . 2 2 2 2 2 2 2 . . . . . . . . 
-        2 2 2 2 2 2 2 2 2 . . . . . . . 
-        2 2 2 2 2 2 2 2 2 2 2 . . . . . 
-        2 2 2 2 2 2 2 f f 2 2 2 . . . . 
-        2 2 2 2 2 2 2 f f 2 2 2 . . . . 
-        2 2 2 2 2 2 2 2 2 2 2 2 . . . . 
-        2 2 2 2 2 2 2 2 2 2 2 2 . . . . 
-        2 2 2 2 2 2 2 2 2 2 2 2 . . . . 
-        2 2 2 2 2 2 2 2 2 2 2 2 . . . . 
-        2 2 2 2 2 2 2 f f 2 2 2 . . . . 
-        2 2 2 2 2 2 2 f f 2 2 2 . . . . 
-        2 2 2 2 2 2 2 2 2 2 2 . . . . . 
-        2 2 2 2 2 2 2 2 2 . . . . . . . 
-        . 2 2 2 2 2 2 2 . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
+        . 2 2 2 2 2 2 2 2 2 2 . 
+        2 2 2 2 2 2 2 2 2 2 2 2 
+        2 2 2 2 2 2 2 2 f f 2 2 
+        2 2 2 2 2 2 2 2 f f 2 2 
+        2 2 2 2 2 2 2 2 2 2 2 2 
+        2 2 2 2 2 2 2 2 2 2 2 2 
+        2 2 2 2 2 2 2 2 2 2 2 2 
+        2 2 2 2 2 2 2 2 2 2 2 2 
+        2 2 2 2 2 2 2 2 f f 2 2 
+        2 2 2 2 2 2 2 2 f f 2 2 
+        2 2 2 2 2 2 2 2 2 2 2 2 
+        . 2 2 2 2 2 2 2 2 2 2 . 
         `, SpriteKind.Player)
     tiles.placeOnRandomTile(mySprite, assets.tile`myTile0`)
     grid.snap(mySprite, false)
@@ -150,24 +130,20 @@ function Start () {
     Tailparts = []
     for (let Indexofsnake = 0; Indexofsnake <= 2; Indexofsnake++) {
         Snakeoptions = sprites.create(img`
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
-            . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
-            . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
-            . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
-            . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
-            . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
-            . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
-            . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
-            . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
-            . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
-            . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
-            . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
+            2 2 2 2 2 2 2 2 2 2 2 2 
+            2 2 2 2 2 2 2 2 2 2 2 2 
+            2 2 2 2 2 2 2 2 2 2 2 2 
+            2 2 2 2 2 2 2 2 2 2 2 2 
+            2 2 2 2 2 2 2 2 2 2 2 2 
+            2 2 2 2 2 2 2 2 2 2 2 2 
+            2 2 2 2 2 2 2 2 2 2 2 2 
+            2 2 2 2 2 2 2 2 2 2 2 2 
+            2 2 2 2 2 2 2 2 2 2 2 2 
+            2 2 2 2 2 2 2 2 2 2 2 2 
+            2 2 2 2 2 2 2 2 2 2 2 2 
+            2 2 2 2 2 2 2 2 2 2 2 2 
             `, SpriteKind.tail)
-        Snakeoptions.x = mySprite.x + (Indexofsnake + 1) * 8
+        Snakeoptions.x = mySprite.x + (Indexofsnake + 1) * 12
         Tailparts.push(Snakeoptions)
     }
     direction = "right"
@@ -214,6 +190,9 @@ function orbcheker (row20: number, colum20: number) {
         }
     }
 }
+sprites.onOverlap(SpriteKind.Player, SpriteKind.tail, function (sprite, otherSprite) {
+    game.gameOver(false)
+})
 let mySprite: Sprite = null
 let applenumber = 0
 let Snakeoptions: Sprite = null
@@ -254,15 +233,6 @@ while (map == false) {
         }
     }
 }
-game.onUpdateInterval(2000, function () {
-    if (movebuttons) {
-        movebuttons = false
-        grid.snap(mySprite, true)
-    } else {
-        movebuttons = true
-        grid.snap(mySprite, false)
-    }
-})
 forever(function () {
     if (applenumber == 0) {
         if (map_size == 1) {
@@ -280,4 +250,13 @@ forever(function () {
 })
 game.onUpdateInterval(200, function () {
     movement()
+})
+game.onUpdateInterval(200, function () {
+    if (movebuttons) {
+        movebuttons = false
+        grid.snap(mySprite, true)
+    } else {
+        movebuttons = true
+        grid.snap(mySprite, false)
+    }
 })
