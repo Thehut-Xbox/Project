@@ -142,7 +142,7 @@ function Start () {
         . 2 2 2 2 2 2 2 2 2 2 . 
         `, SpriteKind.Player)
     tiles.placeOnRandomTile(mySprite, assets.tile`myTile0`)
-    // This code was made freely available by https://github.com/microsoft/arcade-grid
+    // This  code was made freely available by https://github.com/microsoft/arcade-grid
     grid.snap(mySprite, false)
     grid.moveWithButtons(mySprite)
     Tailparts = [sprites.create(img`
