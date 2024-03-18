@@ -13,10 +13,26 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     }
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile`, function (sprite, location) {
+    tailcount = tailcount + 1
+    Snakeoptions = sprites.create(img`
+        2 2 2 2 2 2 2 2 2 2 2 2 
+        2 2 2 2 2 2 2 2 2 2 2 2 
+        2 2 2 2 2 2 2 2 2 2 2 2 
+        2 2 2 2 2 2 2 2 2 2 2 2 
+        2 2 2 2 2 2 2 2 2 2 2 2 
+        2 2 2 2 2 2 2 2 2 2 2 2 
+        2 2 2 2 2 2 2 2 2 2 2 2 
+        2 2 2 2 2 2 2 2 2 2 2 2 
+        2 2 2 2 2 2 2 2 2 2 2 2 
+        2 2 2 2 2 2 2 2 2 2 2 2 
+        2 2 2 2 2 2 2 2 2 2 2 2 
+        2 2 2 2 2 2 2 2 2 2 2 2 
+        `, SpriteKind.tail)
     tiles.setTileAt(location, assets.tile`myTile0`)
     Tailparts.push(Snakeoptions)
     applenumber = applenumber - 1
 })
+// This Code was made freely available by https://forum.makecode.com/t/snake-game-grayscale/17122.
 function movement () {
     Snakeoptions = sprites.create(img`
         2 2 2 2 2 2 2 2 2 2 2 2 
@@ -109,6 +125,7 @@ function movement () {
     sprites.destroy(Tailparts.pop())
 }
 function Start () {
+    tailcount = 2
     applenumber = 0
     mySprite = sprites.create(img`
         . 2 2 2 2 2 2 2 2 2 2 . 
@@ -125,27 +142,28 @@ function Start () {
         . 2 2 2 2 2 2 2 2 2 2 . 
         `, SpriteKind.Player)
     tiles.placeOnRandomTile(mySprite, assets.tile`myTile0`)
+    // This code was made freely available by https://github.com/microsoft/arcade-grid
     grid.snap(mySprite, false)
     grid.moveWithButtons(mySprite)
-    Tailparts = []
-    for (let Indexofsnake = 0; Indexofsnake <= 2; Indexofsnake++) {
-        Snakeoptions = sprites.create(img`
-            2 2 2 2 2 2 2 2 2 2 2 2 
-            2 2 2 2 2 2 2 2 2 2 2 2 
-            2 2 2 2 2 2 2 2 2 2 2 2 
-            2 2 2 2 2 2 2 2 2 2 2 2 
-            2 2 2 2 2 2 2 2 2 2 2 2 
-            2 2 2 2 2 2 2 2 2 2 2 2 
-            2 2 2 2 2 2 2 2 2 2 2 2 
-            2 2 2 2 2 2 2 2 2 2 2 2 
-            2 2 2 2 2 2 2 2 2 2 2 2 
-            2 2 2 2 2 2 2 2 2 2 2 2 
-            2 2 2 2 2 2 2 2 2 2 2 2 
-            2 2 2 2 2 2 2 2 2 2 2 2 
-            `, SpriteKind.tail)
-        Snakeoptions.x = mySprite.x + (Indexofsnake + 1) * 12
-        Tailparts.push(Snakeoptions)
-    }
+    Tailparts = [sprites.create(img`
+        2 2 2 2 2 2 2 2 2 2 2 2 
+        2 2 2 2 2 2 2 2 2 2 2 2 
+        2 2 2 2 2 2 2 2 2 2 2 2 
+        2 2 2 2 2 2 2 2 2 2 2 2 
+        2 2 2 2 2 2 2 2 2 2 2 2 
+        2 2 2 2 2 2 2 2 2 2 2 2 
+        2 2 2 2 2 2 2 2 2 2 2 2 
+        2 2 2 2 2 2 2 2 2 2 2 2 
+        `, SpriteKind.tail), sprites.create(img`
+        2 2 2 2 2 2 2 2 2 2 2 2 
+        2 2 2 2 2 2 2 2 2 2 2 2 
+        2 2 2 2 2 2 2 2 2 2 2 2 
+        2 2 2 2 2 2 2 2 2 2 2 2 
+        2 2 2 2 2 2 2 2 2 2 2 2 
+        2 2 2 2 2 2 2 2 2 2 2 2 
+        2 2 2 2 2 2 2 2 2 2 2 2 
+        2 2 2 2 2 2 2 2 2 2 2 2 
+        `, SpriteKind.tail)]
     direction = "right"
 }
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
@@ -169,6 +187,7 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
         }
     }
 })
+// Spawns the orbs around the Map
 function obstacles (column: number, row: number) {
     for (let index2 = 0; index2 <= column; index2++) {
         for (let index3 = 0; index3 <= row; index3++) {
@@ -182,9 +201,9 @@ function obstacles (column: number, row: number) {
     orbcheker(19, 19)
 }
 function orbcheker (row20: number, colum20: number) {
-    for (let index2 = 0; index2 <= colum20; index2++) {
-        for (let index3 = 0; index3 <= row20; index3++) {
-            if (tiles.tileAtLocationEquals(tiles.getTileLocation(index2, index3), assets.tile`myTile`)) {
+    for (let index22 = 0; index22 <= colum20; index22++) {
+        for (let index32 = 0; index32 <= row20; index32++) {
+            if (tiles.tileAtLocationEquals(tiles.getTileLocation(index22, index32), assets.tile`myTile`)) {
                 applenumber = applenumber + 1
             }
         }
@@ -195,8 +214,9 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.tail, function (sprite, otherSpr
 })
 let mySprite: Sprite = null
 let applenumber = 0
-let Snakeoptions: Sprite = null
 let Tailparts: Sprite[] = []
+let Snakeoptions: Sprite = null
+let tailcount = 0
 let direction = ""
 let map = false
 namespace userconfig {
@@ -233,6 +253,11 @@ while (map == false) {
         }
     }
 }
+forever(function () {
+    if (tailcount == 10) {
+        game.gameOver(true)
+    }
+})
 forever(function () {
     if (applenumber == 0) {
         if (map_size == 1) {
