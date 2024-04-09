@@ -14,20 +14,6 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile`, function (sprite, location) {
     tailcount = tailcount + 1
-    Snakeoptions = sprites.create(img`
-        2 2 2 2 2 2 2 2 2 2 2 2 
-        2 2 2 2 2 2 2 2 2 2 2 2 
-        2 2 2 2 2 2 2 2 2 2 2 2 
-        2 2 2 2 2 2 2 2 2 2 2 2 
-        2 2 2 2 2 2 2 2 2 2 2 2 
-        2 2 2 2 2 2 2 2 2 2 2 2 
-        2 2 2 2 2 2 2 2 2 2 2 2 
-        2 2 2 2 2 2 2 2 2 2 2 2 
-        2 2 2 2 2 2 2 2 2 2 2 2 
-        2 2 2 2 2 2 2 2 2 2 2 2 
-        2 2 2 2 2 2 2 2 2 2 2 2 
-        2 2 2 2 2 2 2 2 2 2 2 2 
-        `, SpriteKind.tail)
     tiles.setTileAt(location, assets.tile`myTile0`)
     Tailparts.push(Snakeoptions)
     applenumber = applenumber - 1
@@ -121,8 +107,8 @@ function movement () {
         Snakeoptions.y = mySprite.y + 12
         Snakeoptions.x = mySprite.x
     }
-    Tailparts.unshift(Snakeoptions)
     sprites.destroy(Tailparts.pop())
+    Tailparts.unshift(Snakeoptions)
 }
 function Start () {
     tailcount = 2
@@ -214,8 +200,8 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.tail, function (sprite, otherSpr
 })
 let mySprite: Sprite = null
 let applenumber = 0
-let Tailparts: Sprite[] = []
 let Snakeoptions: Sprite = null
+let Tailparts: Sprite[] = []
 let tailcount = 0
 let direction = ""
 let map = false
